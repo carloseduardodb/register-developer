@@ -3,9 +3,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
   Generated,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity()
@@ -16,7 +16,7 @@ export class Developer {
   @Generated('uuid')
   developer_uuid: string;
 
-  @OneToOne(() => Level)
+  @ManyToOne(() => Level)
   @JoinColumn({
     name: 'level_id',
   })

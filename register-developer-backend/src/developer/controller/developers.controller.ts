@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
   Res,
   UsePipes,
   ValidationPipe,
@@ -71,9 +72,9 @@ export class DevelopersController {
   }
 
   @Get()
-  async findAll(@Res() res) {
+  async findAll(@Res() res, @Query() query) {
     try {
-      const developers = await this.getAllDeveloper.getAll();
+      const developers = await this.getAllDeveloper.getAll(query);
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         data: developers,
