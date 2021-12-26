@@ -1,6 +1,6 @@
 ## Register Developer
 
-### Tecnologies
+### Technologies
 
 - NestJs
 - NextJs
