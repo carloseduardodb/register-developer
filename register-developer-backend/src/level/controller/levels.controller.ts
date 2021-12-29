@@ -11,6 +11,7 @@ import {
   Post,
   Query,
   Res,
+  UseFilters,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -23,6 +24,7 @@ import { IDeleteLevelUseCase } from '../interfaces/usecase/delete-level.usecase.
 import { IGetAllLevelUseCase } from '../interfaces/usecase/get-all-level.usecase.interface';
 import { PartialLevel } from '../domain/partial-level.domain';
 import { PartialLevelPaginationDomain } from '../domain/partial-level-pagination.domain';
+import { HttpExceptionFilter } from '../../common/filters/http-exception.filter';
 
 @Controller('levels')
 export class LevelsController {
@@ -40,56 +42,39 @@ export class LevelsController {
   ) {}
 
   @UsePipes(new ValidationPipe())
+  @UseFilters(new HttpExceptionFilter())
   @Post('/create')
   async create(@Res() res, @Body() levelDomain: LevelDomain) {
-    try {
-      const level = await this.createLevelApp.create(levelDomain);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.CREATED,
-        message: `${level.name} successfully created`,
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+    const level = await this.createLevelApp.create(levelDomain);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.CREATED,
+      message: `${level.name} successfully created`,
+    });
   }
 
   @Get(':id')
+  @UseFilters(new HttpExceptionFilter())
   async findOne(@Res() res, @Param('id', new ParseUUIDPipe()) id) {
-    try {
-      const level = await this.getLevelApp.getById(id);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: level,
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+    const level = await this.getLevelApp.getById(id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: level,
+    });
   }
 
   @Get()
+  @UseFilters(new HttpExceptionFilter())
   async findAll(@Res() res, @Query() query: PartialLevelPaginationDomain) {
-    try {
-      const levels = await this.getAllLevel.getAll(query);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: levels,
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+    const levels = await this.getAllLevel.getAll(query);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: levels,
+    });
   }
 
   @UsePipes(new ValidationPipe())
   @Patch('/update/:id')
+  @UseFilters(new HttpExceptionFilter())
   async update(
     @Res() res,
     @Param('id', new ParseUUIDPipe()) id: string,
@@ -111,18 +96,12 @@ export class LevelsController {
   }
 
   @Delete('/delete/:id')
+  @UseFilters(new HttpExceptionFilter())
   async remove(@Res() res, @Param('id', new ParseUUIDPipe()) id: string) {
-    try {
-      await this.deleteLevelApp.remove(id);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        message: 'Level successfully deleted',
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+    await this.deleteLevelApp.remove(id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      message: 'Level successfully deleted',
+    });
   }
 }
