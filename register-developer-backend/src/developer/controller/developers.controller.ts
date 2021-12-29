@@ -11,6 +11,7 @@ import {
   Post,
   Query,
   Res,
+  UseFilters,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -22,6 +23,8 @@ import { IEditDeveloperUseCase } from '../interfaces/usecase/edit-developer.usec
 import { IDeleteDeveloperUseCase } from '../interfaces/usecase/delete-developer.usecase.interface';
 import { IGetAllDeveloperUseCase } from '../interfaces/usecase/get-all-developer.usecase.interface';
 import { PartialDeveloper } from '../domain/partial-developer.domain';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
+import { PartialDeveloperPaginationDomain } from '../domain/partial-developer-pagination.domain';
 
 @Controller('developers')
 export class DevelopersController {
@@ -40,88 +43,57 @@ export class DevelopersController {
 
   @UsePipes(new ValidationPipe())
   @Post('/create')
+  @UseFilters(new HttpExceptionFilter())
   async create(@Res() res, @Body() developerDomain: DeveloperDomain) {
-    try {
-      const developer = await this.createDeveloperApp.create(developerDomain);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.CREATED,
-        message: `${developer.name} successfully created`,
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+    const developer = await this.createDeveloperApp.create(developerDomain);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.CREATED,
+      message: `${developer.name} successfully created`,
+    });
   }
 
   @Get(':id')
+  @UseFilters(new HttpExceptionFilter())
   async findOne(@Res() res, @Param('id', new ParseUUIDPipe()) id) {
-    try {
-      const developer = await this.getDeveloperApp.getById(id);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: developer,
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+    const developer = await this.getDeveloperApp.getById(id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: developer,
+    });
   }
 
   @Get()
-  async findAll(@Res() res, @Query() query) {
-    try {
-      const developers = await this.getAllDeveloper.getAll(query);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: developers,
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+  @UseFilters(new HttpExceptionFilter())
+  async findAll(@Res() res, @Query() query: PartialDeveloperPaginationDomain) {
+    const developers = await this.getAllDeveloper.getAll(query);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: developers,
+    });
   }
 
   @UsePipes(new ValidationPipe())
   @Patch('/update/:id')
+  @UseFilters(new HttpExceptionFilter())
   async update(
     @Res() res,
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() data: PartialDeveloper,
   ) {
     const updatedDeveloper = await this.editDeveloperApp.update(id, data);
-
-    if (updatedDeveloper) {
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: updatedDeveloper,
-      });
-    } else {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Invalid input type',
-      });
-    }
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: updatedDeveloper,
+    });
   }
 
   @Delete('/delete/:id')
+  @UseFilters(new HttpExceptionFilter())
   async remove(@Res() res, @Param('id', new ParseUUIDPipe()) id: string) {
-    try {
-      await this.deleteDeveloperApp.remove(id);
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        message: 'Developer successfully deleted',
-      });
-    } catch (err) {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: err,
-      });
-    }
+    await this.deleteDeveloperApp.remove(id);
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      message: 'Developer successfully deleted',
+    });
   }
 }
