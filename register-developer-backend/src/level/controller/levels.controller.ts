@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
   Res,
   UsePipes,
   ValidationPipe,
@@ -21,6 +22,7 @@ import { IEditLevelUseCase } from '../interfaces/usecase/edit-level.usecase.inte
 import { IDeleteLevelUseCase } from '../interfaces/usecase/delete-level.usecase.interface';
 import { IGetAllLevelUseCase } from '../interfaces/usecase/get-all-level.usecase.interface';
 import { PartialLevel } from '../domain/partial-level.domain';
+import { PartialLevelPaginationDomain } from '../domain/partial-level-pagination.domain';
 
 @Controller('levels')
 export class LevelsController {
@@ -71,9 +73,9 @@ export class LevelsController {
   }
 
   @Get()
-  async findAll(@Res() res) {
+  async findAll(@Res() res, @Query() query: PartialLevelPaginationDomain) {
     try {
-      const levels = await this.getAllLevel.getAll();
+      const levels = await this.getAllLevel.getAll(query);
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         data: levels,
