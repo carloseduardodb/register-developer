@@ -14,7 +14,10 @@ export class GetLevelService implements IGetLevelService {
 
   async getById(id: string): Promise<LevelDomain> {
     try {
-      return await this.levelRepository.findOne({ level_uuid: id });
+      return await this.levelRepository.findOne(
+        { level_uuid: id },
+        { relations: ['developers'] },
+      );
     } catch {
       throw new NotFoundException('Level ID is invalid');
     }
