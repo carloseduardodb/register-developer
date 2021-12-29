@@ -13,6 +13,7 @@ export class Developer {
   @PrimaryGeneratedColumn('increment')
   developer_id: number;
 
+  @Column()
   @Generated('uuid')
   developer_uuid: string;
 
@@ -36,4 +37,9 @@ export class Developer {
 
   @Column()
   hobby: string;
+
+  toJSON() {
+    delete this.developer_id;
+    return this;
+  }
 }
