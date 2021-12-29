@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LevelDomain } from '../domain/level.domain';
@@ -14,7 +14,14 @@ export class EditLevelService implements IEditLevelService {
   ) {}
 
   async update(id: string, data: PartialLevel): Promise<LevelDomain> {
-    await this.levelRepository.update({ level_uuid: id }, data);
-    return await this.levelRepository.findOne({ level_uuid: id });
+    try {
+      const level = await this.levelRepository.findOne({ level_uuid: id });
+
+      if (!level) throw new Error();
+      await this.levelRepository.update({ level_uuid: id }, data);
+      return level;
+    } catch (error) {
+      throw new BadRequestException('Error updating level');
+    }
   }
 }
