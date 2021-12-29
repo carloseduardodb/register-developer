@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsDateString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class LevelDomain {
   @IsString()
