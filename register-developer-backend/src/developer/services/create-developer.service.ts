@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Developer } from '../domain/developer.entity';
@@ -10,6 +11,10 @@ export class CreateDeveloperService implements ICreateDeveloperService {
   ) {}
 
   async create(developer: Developer): Promise<Developer> {
-    return await this.developerRepository.save(developer);
+    try {
+      return await this.developerRepository.save(developer);
+    } catch (error) {
+      throw new BadRequestException('Error creating developer');
+    }
   }
 }

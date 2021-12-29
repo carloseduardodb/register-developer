@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DeveloperDomain } from '../domain/developer.domain';
@@ -14,7 +14,11 @@ export class EditDeveloperService implements IEditDeveloperService {
   ) {}
 
   async update(id: string, data: PartialDeveloper): Promise<DeveloperDomain> {
-    await this.developerRepository.update({ developer_uuid: id }, data);
-    return await this.developerRepository.findOne({ developer_uuid: id });
+    try {
+      await this.developerRepository.update({ developer_uuid: id }, data);
+      return await this.developerRepository.findOne({ developer_uuid: id });
+    } catch (error) {
+      throw new BadRequestException('Error updating developer');
+    }
   }
 }

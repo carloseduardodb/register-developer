@@ -13,10 +13,13 @@ export class GetDeveloperService implements IGetDeveloperService {
   ) {}
 
   async getById(id: string): Promise<DeveloperDomain> {
-    try {
-      return await this.developerRepository.findOne({ developer_uuid: id });
-    } catch {
-      throw new NotFoundException('Developer ID is invalid');
+    const developer = await this.developerRepository.findOne({
+      developer_uuid: id,
+    });
+
+    if (!developer) {
+      throw new NotFoundException(`Developer with id ${id} not found`);
     }
+    return developer;
   }
 }
