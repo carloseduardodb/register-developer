@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Level } from '../domain/level.entity';
@@ -12,7 +12,11 @@ export class DeleteLevelService implements IDeleteLevelService {
   ) {}
 
   async remove(id: string): Promise<{ deleted: boolean }> {
-    await this.levelRepository.delete({ level_uuid: id });
-    return { deleted: true };
+    try {
+      await this.levelRepository.delete({ level_uuid: id });
+      return { deleted: true };
+    } catch (error) {
+      throw new BadRequestException('Error deleting level');
+    }
   }
 }

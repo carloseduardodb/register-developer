@@ -19,14 +19,18 @@ export class GetAllLevelService implements IGetAllLevelService {
     const skip = (page - 1) * take;
     const keyword = query.keyword || '';
 
-    const data = await this.levelRepository.findAndCount({
-      where: { name: Like('%' + keyword + '%') },
-      order: { name: 'DESC' },
-      take: take,
-      skip: skip,
-      relations: ['developers'],
-    });
+    try {
+      const data = await this.levelRepository.findAndCount({
+        where: { name: Like('%' + keyword + '%') },
+        order: { name: 'DESC' },
+        take: take,
+        skip: skip,
+        relations: ['developers'],
+      });
 
-    return paginateResponse(data, page);
+      return paginateResponse(data, page);
+    } catch (error) {
+      throw new Error('Error getting all levels');
+    }
   }
 }
