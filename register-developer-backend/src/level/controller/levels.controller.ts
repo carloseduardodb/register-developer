@@ -72,7 +72,6 @@ export class LevelsController {
     });
   }
 
-  @UsePipes(new ValidationPipe())
   @Patch('/update/:id')
   @UseFilters(new HttpExceptionFilter())
   async update(
@@ -81,18 +80,10 @@ export class LevelsController {
     @Body() data: PartialLevel,
   ) {
     const updatedLevel = await this.editLevelApp.update(id, data);
-
-    if (updatedLevel) {
-      return res.status(HttpStatus.OK).json({
-        statusCode: HttpStatus.OK,
-        data: updatedLevel,
-      });
-    } else {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Invalid input type',
-      });
-    }
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: updatedLevel,
+    });
   }
 
   @Delete('/delete/:id')
