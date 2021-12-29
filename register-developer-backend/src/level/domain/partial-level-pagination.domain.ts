@@ -1,7 +1,9 @@
 import { Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class PartialLevelPaginationDomain {
+export class PartialLevelPaginationDomain
+  implements PartialLevelPaginationDomain
+{
   @Type(() => Number)
   @IsNumber()
   @IsOptional()
