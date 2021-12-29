@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { Level } from '../domain/level.entity';
@@ -30,7 +30,7 @@ export class GetAllLevelService implements IGetAllLevelService {
 
       return paginateResponse(data, page);
     } catch (error) {
-      throw new Error('Error getting all levels');
+      throw new BadRequestException('Error getting all levels');
     }
   }
 }
