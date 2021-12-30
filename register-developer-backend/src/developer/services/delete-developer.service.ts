@@ -1,6 +1,6 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Developer } from '../domain/developer.entity';
 import { IDeleteDeveloperService } from '../interfaces/services/delete-developer.service.interface';
 
@@ -12,11 +12,14 @@ export class DeleteDeveloperService implements IDeleteDeveloperService {
   ) {}
 
   async remove(id: string): Promise<{ deleted: boolean }> {
-    try {
+    const developer = await this.developerRepository.findOne({
+      developer_uuid: id,
+    });
+    if (!developer) {
+      throw new NotFoundException('Developer not found.');
+    } else {
       await this.developerRepository.delete({ developer_uuid: id });
       return { deleted: true };
-    } catch (error) {
-      throw new BadRequestException('Error deleting developer');
     }
   }
 }
