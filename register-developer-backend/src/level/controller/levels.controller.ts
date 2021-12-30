@@ -25,7 +25,9 @@ import { IGetAllLevelUseCase } from '../interfaces/usecase/get-all-level.usecase
 import { PartialLevel } from '../domain/partial-level.domain';
 import { PartialLevelPaginationDomain } from '../domain/partial-level-pagination.domain';
 import { HttpExceptionFilter } from '../../common/filters/http-exception.filter';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('levels')
 @Controller('levels')
 export class LevelsController {
   constructor(
