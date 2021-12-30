@@ -4,7 +4,10 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class PartialDeveloper implements PartialDeveloper {
   @IsNumber()
-  @ApiProperty()
+  @ApiProperty({
+    example: 1,
+    type: Number,
+  })
   readonly level: Level;
 
   @IsString()
