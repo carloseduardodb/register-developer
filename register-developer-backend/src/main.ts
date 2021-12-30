@@ -1,7 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from './common/validation.pipe';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import {
+  SwaggerModule,
+  DocumentBuilder,
+  SwaggerCustomOptions,
+} from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,8 +17,12 @@ async function bootstrap() {
     .addTag('register-developer')
     .build();
 
+  const customOptions: SwaggerCustomOptions = {
+    customSiteTitle: 'Developers API Docs',
+  };
+
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, customOptions);
 
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
