@@ -1,4 +1,4 @@
-import { Level } from 'src/level/domain/level.entity';
+import { Level } from '../../level/domain/level.entity';
 import {
   Entity,
   Column,
@@ -41,5 +41,11 @@ export class Developer {
   toJSON() {
     delete this.developer_id;
     return this;
+  }
+
+  constructor(private developer?: Partial<Developer>) {
+    if (developer) {
+      Object.assign(this, developer);
+    }
   }
 }
