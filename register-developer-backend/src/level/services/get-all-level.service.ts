@@ -13,7 +13,12 @@ export class GetAllLevelService implements IGetAllLevelService {
     private levelRepository: Repository<Level>,
   ) {}
 
-  async getAll(query): Promise<LevelPaginationDomain> {
+  async getAll(query: {
+    take: number;
+    page: number;
+    skip: number;
+    keyword: string;
+  }): Promise<LevelPaginationDomain> {
     const take = query.take || 10;
     const page = query.page || 1;
     const skip = (page - 1) * take;
