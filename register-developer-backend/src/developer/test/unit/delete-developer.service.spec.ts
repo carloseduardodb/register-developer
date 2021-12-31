@@ -35,7 +35,8 @@ describe('DevelopersService', () => {
         {
           provide: getRepositoryToken(Developer),
           useValue: {
-            save: jest.fn().mockResolvedValue(developerEntity[0]),
+            delete: jest.fn().mockResolvedValue(developerEntity[0]),
+            findOne: jest.fn().mockResolvedValue(developerEntity[0]),
           },
         },
       ],
@@ -48,5 +49,14 @@ describe('DevelopersService', () => {
 
   it('should be defined', () => {
     expect(deleteDeveloperService).toBeDefined();
+  });
+
+  describe('delete', () => {
+    it('must delete a developer successfully', async () => {
+      const result = await deleteDeveloperService.remove(
+        'bc5a52d7-78a9-4f2e-a5df-16bd19de1f28',
+      );
+      expect(result).toEqual({ deleted: true });
+    });
   });
 });

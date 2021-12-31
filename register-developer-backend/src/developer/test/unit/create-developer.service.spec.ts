@@ -1,8 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { CreateDeveloperService } from './../../services/create-developer.service';
 import { Developer } from '../../domain/developer.entity';
-import { CreateLevelService } from '../../../level/services/create-level.service';
 import { Level } from '../../../level/domain/level.entity';
 
 const levelEntity: Level[] = [
@@ -21,7 +20,7 @@ const developerEntity: Developer[] = [
     birth_date: new Date(),
     hobby: '',
     gender: 'male',
-    level: levelEntity[1],
+    level: levelEntity[0],
     name: 'Carlos',
   }),
 ];
@@ -54,7 +53,6 @@ describe('DevelopersService', () => {
   describe('create', () => {
     it('must save a developer successfully', async () => {
       const result = await createDeveloperService.create(developerEntity[0]);
-
       expect(result).toBe(developerEntity[0]);
     });
   });

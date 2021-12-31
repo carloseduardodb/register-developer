@@ -35,7 +35,8 @@ describe('DevelopersService', () => {
         {
           provide: getRepositoryToken(Developer),
           useValue: {
-            save: jest.fn().mockResolvedValue(developerEntity[0]),
+            update: jest.fn().mockResolvedValue(developerEntity[0]),
+            findOne: jest.fn().mockResolvedValue(developerEntity[0]),
           },
         },
       ],
@@ -47,5 +48,15 @@ describe('DevelopersService', () => {
 
   it('should be defined', () => {
     expect(editDeveloperService).toBeDefined();
+  });
+
+  describe('update', () => {
+    it('must save a developer successfully', async () => {
+      const result = await editDeveloperService.update(
+        'bc5a52d7-78a9-4f2e-a5df-16bd19de1f28',
+        developerEntity[0],
+      );
+      expect(result).toBe(developerEntity[0]);
+    });
   });
 });

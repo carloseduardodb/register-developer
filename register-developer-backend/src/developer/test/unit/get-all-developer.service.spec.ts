@@ -12,7 +12,33 @@ const levelEntity: Level[] = [
   }),
 ];
 
-const developerEntity: Developer[] = [
+const developerEntityPaginate: any = [
+  [
+    new Developer({
+      developer_id: 1,
+      developer_uuid: 'bc5a52d7-78a9-4f2e-a5df-16bd19de1f28',
+      age: 20,
+      birth_date: new Date(),
+      hobby: '',
+      gender: 'male',
+      level: levelEntity[0],
+      name: 'Carlos',
+    }),
+    new Developer({
+      developer_id: 1,
+      developer_uuid: 'bc5a52d7-78a9-4f2e-a5df-16bd19de1f28',
+      age: 20,
+      birth_date: new Date(),
+      hobby: '',
+      gender: 'male',
+      level: levelEntity[0],
+      name: 'Carlos',
+    }),
+  ],
+  2,
+];
+
+const developerEntity: any = [
   new Developer({
     developer_id: 1,
     developer_uuid: 'bc5a52d7-78a9-4f2e-a5df-16bd19de1f28',
@@ -20,7 +46,17 @@ const developerEntity: Developer[] = [
     birth_date: new Date(),
     hobby: '',
     gender: 'male',
-    level: levelEntity[1],
+    level: levelEntity[0],
+    name: 'Carlos',
+  }),
+  new Developer({
+    developer_id: 1,
+    developer_uuid: 'bc5a52d7-78a9-4f2e-a5df-16bd19de1f28',
+    age: 20,
+    birth_date: new Date(),
+    hobby: '',
+    gender: 'male',
+    level: levelEntity[0],
     name: 'Carlos',
   }),
 ];
@@ -35,7 +71,7 @@ describe('DevelopersService', () => {
         {
           provide: getRepositoryToken(Developer),
           useValue: {
-            save: jest.fn().mockResolvedValue(developerEntity[0]),
+            findAndCount: jest.fn().mockResolvedValue(developerEntityPaginate),
           },
         },
       ],
@@ -48,5 +84,25 @@ describe('DevelopersService', () => {
 
   it('should be defined', () => {
     expect(getAllDeveloperService).toBeDefined();
+  });
+
+  describe('get all paginate', () => {
+    it('must get all paginate developer successfully', async () => {
+      const result = await getAllDeveloperService.getAll({
+        take: 1,
+        page: 1,
+        skip: 0,
+        keyword: '',
+      });
+      expect(result).toEqual({
+        statusCode: 'success',
+        data: developerEntity,
+        count: 2,
+        currentPage: 1,
+        nextPage: null,
+        prevPage: null,
+        lastPage: 1,
+      });
+    });
   });
 });
