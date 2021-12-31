@@ -12,8 +12,6 @@ import {
   Query,
   Res,
   UseFilters,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { DeveloperDomain } from '../domain/developer.domain';
 import { DEVELOPER_TYPES } from '../interfaces/types';
@@ -25,6 +23,8 @@ import { IGetAllDeveloperUseCase } from '../interfaces/usecase/get-all-developer
 import { PartialDeveloper } from '../domain/partial-developer.domain';
 import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 import { PartialDeveloperPaginationDomain } from '../domain/partial-developer-pagination.domain';
+
+//DOCS imports
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -34,14 +34,14 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import createDeveloperErrorSchema from '../schemas/create-developer-error.schema';
-import createDeveloperSuccessSchema from '../schemas/create-developer-success.schema';
-import findOneDeveloperErrorSchema from '../schemas/find-one-developer-error.schema';
-import findAllDeveloperSuccessSchema from '../schemas/find-all-developer-success.schema';
-import deleteDeveloperSuccessSchema from '../schemas/delete-developer-success.schema';
-import deleteDeveloperErrorSchema from '../schemas/delete-developer-error.schema';
-import updateDeveloperSuccessSchema from '../schemas/update-developer-success.schema';
-import updateDeveloperErrorSchema from '../schemas/update-developer-error.schema';
+import createDeveloperErrorSchema from '../docs/create-developer-error.schema';
+import createDeveloperSuccessSchema from '../docs/create-developer-success.schema';
+import findOneDeveloperErrorSchema from '../docs/find-one-developer-error.schema';
+import findAllDeveloperSuccessSchema from '../docs/find-all-developer-success.schema';
+import deleteDeveloperSuccessSchema from '../docs/delete-developer-success.schema';
+import deleteDeveloperErrorSchema from '../docs/delete-developer-error.schema';
+import updateDeveloperSuccessSchema from '../docs/update-developer-success.schema';
+import updateDeveloperErrorSchema from '../docs/update-developer-error.schema';
 
 @ApiTags('developers')
 @Controller('developers')
@@ -59,7 +59,7 @@ export class DevelopersController {
     private deleteDeveloperApp: IDeleteDeveloperUseCase,
   ) {}
 
-  // ---------------------------Created Developer-------------------------------
+  // Created Developer-------------------------------
 
   // DOCUMENTATION
   @ApiCreatedResponse({
@@ -75,7 +75,6 @@ export class DevelopersController {
   })
 
   // DEFAULT
-  @UsePipes(new ValidationPipe())
   @Post('/create')
   @UseFilters(new HttpExceptionFilter())
   async create(@Res() res, @Body() developerDomain: DeveloperDomain) {
@@ -86,7 +85,7 @@ export class DevelopersController {
     });
   }
 
-  // ---------------------------Get Developer-------------------------------
+  // Get Developer-------------------------------
 
   // DOCUMENTATION
   @ApiQuery({
@@ -108,12 +107,11 @@ export class DevelopersController {
     return res.status(HttpStatus.OK).json(developer);
   }
 
-  // ---------------------------FindAll Developer-------------------------------
+  // FindAll Developer-------------------------------
 
   // DOCUMENTATION
   @ApiOkResponse({
-    description:
-      'Consider that a data field will appear in the response with the data below',
+    description: 'Paginate all developers',
     schema: findAllDeveloperSuccessSchema,
   })
 
@@ -125,7 +123,7 @@ export class DevelopersController {
     return res.status(HttpStatus.OK).json(developers);
   }
 
-  // ---------------------------Update Developer-------------------------------
+  // Update Developer-------------------------------
 
   // DOCUMENTATION
   @ApiOkResponse({
@@ -138,7 +136,6 @@ export class DevelopersController {
   })
 
   // DEFAULT
-  @UsePipes(new ValidationPipe())
   @Patch('/update/:uuid')
   @UseFilters(new HttpExceptionFilter())
   async update(
@@ -150,7 +147,7 @@ export class DevelopersController {
     return res.status(HttpStatus.OK).json(updatedDeveloper);
   }
 
-  // ---------------------------Delete Developer-------------------------------
+  // Delete Developer-------------------------------
 
   // DOCUMENTATION
   @ApiOkResponse({
