@@ -3,9 +3,9 @@ import { LevelDomain } from './level.domain';
 export class LevelPaginationDomain {
   statusCode: string;
   data: LevelDomain[];
-  count: any;
-  currentPage: any;
-  nextPage: any;
+  count: number;
+  currentPage: number;
+  nextPage: number;
   prevPage: number;
   lastPage: number;
 }
