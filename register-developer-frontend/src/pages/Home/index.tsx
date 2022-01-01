@@ -20,14 +20,14 @@ const Home = () => {
           <br />
           <main className="gap-y-3 flex flex-col text-white items-center">
             <Link
-              to="/developer"
+              to="/desenvolvedores"
               className="uppercase shadow-sm bg-p-blue p-2 transform hover:scale-105 transition-transform delay-150 duration-200 ease-in-out rounded-lg w-9/12 flex justify-center gap-2"
             >
               <FiAirplay size={25} />
               Desenvolvedor
             </Link>
             <Link
-              to="/levels"
+              to="/niveis"
               className="uppercase shadow-sm bg-p-blue p-2 transform hover:scale-105 transition-transform delay-150 duration-200 ease-in-out rounded-lg w-9/12 flex justify-center gap-2"
             >
               <FiActivity size={25} />
