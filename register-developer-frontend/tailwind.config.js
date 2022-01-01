@@ -8,6 +8,7 @@ module.exports = {
         "p-blue": {
           DEFAULT: "#1374F2",
           light: "#F5FAFD",
+          dark: "#0F4C8B",
         }
       }
     }
