@@ -17,7 +17,7 @@ export class GetAllDeveloperService implements IGetAllDeveloperService {
   async getAll(
     query: PartialDeveloperPaginationDomain,
   ): Promise<DeveloperPaginationDomain> {
-    const take = query.take || 10;
+    const take = query.take || 5;
     const page = query.page || 1;
     const skip = (page - 1) * take;
     const keyword = query.keyword || '';
