@@ -8,7 +8,10 @@ import {
 } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    //desabilitar cors para todos os dominios
+    cors: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Register Developer API')
