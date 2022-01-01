@@ -19,7 +19,7 @@ export class GetAllLevelService implements IGetAllLevelService {
     skip: number;
     keyword: string;
   }): Promise<LevelPaginationDomain> {
-    const take = query.take || 10;
+    const take = query.take || 5;
     const page = query.page || 1;
     const skip = (page - 1) * take;
     const keyword = query.keyword || '';
