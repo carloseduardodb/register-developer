@@ -3,6 +3,9 @@ import { useAlertSystem } from "../../hooks/useAlertSystem";
 import ModalConfirmation from "../ModalConfirmation";
 import { useTable, usePagination } from "react-table";
 import { useEffect } from "react";
+import { useUpdateTable } from "../../hooks/useUpdateTable";
+import { useDeveloper } from "../../hooks/useDeveloper";
+import ExcludeDevelopers from "../ExcludeDevelopers/index";
 
 export default function Table({
   columns,
@@ -13,6 +16,14 @@ export default function Table({
   total,
 }: any) {
   const { setStatusModal, statusModal, message } = useAlertSystem();
+  const { updateTable } = useUpdateTable();
+  const developerActions = useDeveloper();
+
+  /** Edit modal options */
+  const handleUpdateModal = (id: string) => {
+    developerActions.setStatusModal(true);
+    developerActions.setIdEditable(id);
+  };
 
   /** Table options */
   const {
@@ -49,7 +60,7 @@ export default function Table({
   useEffect(() => {
     fetchData({ pageIndex, pageSize });
     setPageSize(5);
-  }, [fetchData, pageIndex, pageSize]);
+  }, [fetchData, pageIndex, pageSize, updateTable, updateTable]);
 
   /**End table options */
 
@@ -57,10 +68,10 @@ export default function Table({
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg ">
             <table
               {...getTableProps()}
-              className="min-w-full divide-y divide-gray-200 max-h-96"
+              className="min-w-full divide-y divide-gray-200 max-h-96 h-screen"
             >
               <thead className="bg-gray-50">
                 {headerGroups.map((headerGroup) => (
@@ -90,11 +101,26 @@ export default function Table({
                 {page.map((row, i) => {
                   prepareRow(row);
                   return (
-                    <tr {...row.getRowProps()}>
+                    <tr
+                      {...row.getRowProps()}
+                      className={`hover:bg-gray-200 cursor-pointer ${
+                        developerActions.containsExcludeItem(row.cells[0].value)
+                          ? "bg-blue-200"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        developerActions.containsExcludeItem(row.cells[0].value)
+                          ? developerActions.removeExcludeItem(
+                              row.cells[0].value
+                            )
+                          : developerActions.addExcludeItem(row.cells[0].value);
+                      }}
+                    >
                       {row.cells.map((cell) => {
                         return (
                           <td
-                            className="px-6 py-4 whitespace-nowrap"
+                            className="px-6 py-4 whitespace-nowrap break-words"
+                            style={{ height: "64px" }}
                             {...cell.getCellProps()}
                           >
                             {cell.render("Cell")}
@@ -105,8 +131,14 @@ export default function Table({
                         scope="col"
                         className="relative px-6 py-3 text-p-blue-dark font-semibold"
                       >
-                        <a href="#">
-                          Editar {/*console.log(row.cells[0].value)*/}
+                        <a
+                          onClick={() => {
+                            handleUpdateModal(row.cells[0].value);
+                            developerActions.setTitle("Editar Desenvolvedor");
+                          }}
+                          className="cursor-pointer text-p-blue hover:text-p-blue-dark"
+                        >
+                          Editar
                         </a>
                       </td>
                     </tr>
@@ -121,13 +153,7 @@ export default function Table({
               </tbody>
             </table>
             <div className="flex justify-between">
-              <button
-                onClick={() => setStatusModal(true)}
-                className="m-2 p-2 bg-p-blue hover:bg-p-blue-dark transform hover:scale-105 transition-transform delay-100 duration-100 rounded text-sm text-white"
-              >
-                Excluir Selecionados
-              </button>
-
+              <ExcludeDevelopers />
               <ModalConfirmation
                 showModal={statusModal}
                 setShowModal={setStatusModal}
