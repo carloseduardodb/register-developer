@@ -22,11 +22,6 @@ export class Level {
   @OneToMany((type) => Developer, (developer) => developer.level)
   developers: Developer[];
 
-  toJSON() {
-    delete this.level_id;
-    return this;
-  }
-
   constructor(private level?: Partial<Level>) {
     if (level) {
       Object.assign(this, level);
