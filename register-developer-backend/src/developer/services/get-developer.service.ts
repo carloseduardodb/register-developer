@@ -13,9 +13,14 @@ export class GetDeveloperService implements IGetDeveloperService {
   ) {}
 
   async getById(id: string): Promise<DeveloperDomain> {
-    const developer = await this.developerRepository.findOne({
-      developer_uuid: id,
-    });
+    const developer = await this.developerRepository.findOne(
+      {
+        developer_uuid: id,
+      },
+      {
+        relations: ['level'],
+      },
+    );
 
     if (!developer) {
       throw new NotFoundException(`Developer with id ${id} not found`);
