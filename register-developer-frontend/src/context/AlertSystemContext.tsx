@@ -5,6 +5,8 @@ type Props = {
   setStatusModal: (data: boolean) => void;
   message: string;
   setMessage: (data: string) => void;
+  decision: boolean;
+  setDecision: (data: boolean) => void;
 };
 
 interface AlertSystemContextProviderProps {
@@ -18,6 +20,7 @@ export function AlertSystemProvider({
 }: AlertSystemContextProviderProps) {
   const [statusModal, setStatusModal] = useState(false);
   const [message, setMessage] = useState("");
+  const [decision, setDecision] = useState(false);
 
   return (
     <AlertSystemContext.Provider
@@ -26,6 +29,8 @@ export function AlertSystemProvider({
         setStatusModal,
         message,
         setMessage,
+        decision,
+        setDecision,
       }}
     >
       {children}
