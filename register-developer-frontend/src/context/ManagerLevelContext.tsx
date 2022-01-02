@@ -7,6 +7,11 @@ type Props = {
   setStatusModal: (data: boolean) => void;
   title: string;
   setTitle: (data: string) => void;
+  addExcludeItem: (data: string) => void;
+  removeExcludeItem: (data: string) => void;
+  containsExcludeItem: (data: string) => boolean;
+  excludedItems: string[];
+  setExcludedItems: (data: string[]) => void;
 };
 
 interface ManagerLevelContextProviderProps {
@@ -20,7 +25,20 @@ export function ManagerLevelProvider({
 }: ManagerLevelContextProviderProps) {
   const [idEditable, setIdEditable] = useState("");
   const [statusModal, setStatusModal] = useState(false);
-  const [title, setTitle] = useState("Criar Desenvolvedor");
+  const [title, setTitle] = useState("Criar Nível");
+  const [excludedItems, setExcludedItems] = useState<string[]>([]);
+
+  const addExcludeItem = (id: string) => {
+    setExcludedItems([...excludedItems, id]);
+  };
+
+  const removeExcludeItem = (id: string) => {
+    setExcludedItems(excludedItems.filter((item) => item !== id));
+  };
+
+  const containsExcludeItem = (id: string) => {
+    return excludedItems.includes(id);
+  };
 
   return (
     <ManagerLevelContext.Provider
@@ -31,6 +49,11 @@ export function ManagerLevelProvider({
         setStatusModal,
         title,
         setTitle,
+        addExcludeItem,
+        removeExcludeItem,
+        containsExcludeItem,
+        excludedItems,
+        setExcludedItems,
       }}
     >
       {children}
