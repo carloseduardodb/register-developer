@@ -13,10 +13,7 @@ const Pagination = ({
   canNextPage,
   canPreviousPage,
   pageCount,
-  pageOptions,
   pageIndex,
-  setPageSize,
-  pageSize,
 }: any) => {
   const [paginateElements, setPaginateElements] = React.useState<ReactNode>();
 
