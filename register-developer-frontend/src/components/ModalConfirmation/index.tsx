@@ -1,4 +1,4 @@
-import React from "react";
+import { useAlertSystem } from "../../hooks/useAlertSystem";
 
 type Props = {
   showModal: boolean;
@@ -7,6 +7,8 @@ type Props = {
 };
 
 const ModalConfirmation = ({ showModal, setShowModal, message }: Props) => {
+  const { setDecision } = useAlertSystem();
+
   return (
     <>
       {showModal ? (
@@ -36,16 +38,22 @@ const ModalConfirmation = ({ showModal, setShowModal, message }: Props) => {
                 {/*footer*/}
                 <div className="flex items-center justify-end px-6 py-3 border-t border-solid rounded-b">
                   <button
-                    className="text-p-blue hover:text-p-blue-dark background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="text-red-500 hover:text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                      setShowModal(false);
+                      setDecision(false);
+                    }}
                   >
                     Não
                   </button>
                   <button
-                    className="bg-p-blue hover:bg-p-blue-dark text-white active:bg-p-blue font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-red-500 hover:bg-red-600 hover:bg-red-500-dark text-white active:bg-p-blue font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                      setShowModal(false);
+                      setDecision(true);
+                    }}
                   >
                     Sim
                   </button>
