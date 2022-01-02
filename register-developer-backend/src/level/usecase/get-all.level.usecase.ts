@@ -9,7 +9,7 @@ import { LevelPaginationDomain } from '../domain/level-pagination.domain';
 export class GetAllLevelUseCase implements IGetAllLevelUseCase {
   constructor(
     @Inject(LEVEL_TYPES.services.IGetAllLevelService)
-    private productService: IGetAllLevelService,
+    private levelService: IGetAllLevelService,
   ) {}
 
   async getAll(query: {
@@ -18,6 +18,6 @@ export class GetAllLevelUseCase implements IGetAllLevelUseCase {
     skip: number;
     keyword: string;
   }): Promise<LevelPaginationDomain> {
-    return await this.productService.getAll(query);
+    return await this.levelService.getAll(query);
   }
 }

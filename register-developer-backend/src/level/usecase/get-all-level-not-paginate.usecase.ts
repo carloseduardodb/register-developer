@@ -10,10 +10,10 @@ export class GetAllLevelNotPaginateUseCase
 {
   constructor(
     @Inject(LEVEL_TYPES.services.IGetAllLevelService)
-    private productService: IGetAllLevelNotPaginateService,
+    private levelService: IGetAllLevelNotPaginateService,
   ) {}
 
   async getAllNotPaginate(): Promise<LevelDomain[]> {
-    return await this.productService.getAllNotPaginate();
+    return await this.levelService.getAllNotPaginate();
   }
 }

@@ -8,7 +8,7 @@ import { DeveloperPaginationDomain } from '../domain/developer-pagination.domain
 export class GetAllDeveloperUseCase implements IGetAllDeveloperUseCase {
   constructor(
     @Inject(DEVELOPER_TYPES.services.IGetAllDeveloperService)
-    private productService: IGetAllDeveloperService,
+    private developerService: IGetAllDeveloperService,
   ) {}
 
   async getAll(query: {
@@ -17,6 +17,6 @@ export class GetAllDeveloperUseCase implements IGetAllDeveloperUseCase {
     skip: number;
     keyword: string;
   }): Promise<DeveloperPaginationDomain> {
-    return await this.productService.getAll(query);
+    return await this.developerService.getAll(query);
   }
 }

@@ -9,10 +9,10 @@ import { LevelDomain } from 'src/level/domain/level.domain';
 export class EditLevelUseCase implements IEditLevelUseCase {
   constructor(
     @Inject(LEVEL_TYPES.services.IEditLevelService)
-    private productService: IEditLevelService,
+    private levelService: IEditLevelService,
   ) {}
 
   async update(id: string, data: PartialLevel): Promise<LevelDomain> {
-    return await this.productService.update(id, data);
+    return await this.levelService.update(id, data);
   }
 }
