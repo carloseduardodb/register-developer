@@ -5,6 +5,7 @@ export const LEVEL_TYPES = {
     IGetAllLevelService: 'IGetAllLevelService',
     IEditLevelService: 'IEditLevelService',
     IDeleteLevelService: 'IDeleteLevelService',
+    IGetAllLevelNotPaginatedService: 'IGetAllLevelNotPaginatedService',
   },
   usecases: {
     ICreateLevelUseCase: 'ICreateLevelUseCase',
@@ -12,5 +13,6 @@ export const LEVEL_TYPES = {
     IGetAllLevelUseCase: 'IGetAllLevelUseCase',
     IEditLevelUseCase: 'IEditLevelUseCase',
     IDeleteLevelUseCase: 'IDeleteLevelUseCase',
+    IGetAllLevelNotPaginatedUseCase: 'IGetAllLevelNotPaginatedUseCase',
   },
 };
