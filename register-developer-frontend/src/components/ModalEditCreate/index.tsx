@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 type modalProps = {
   children: ReactNode;
@@ -38,22 +38,6 @@ const ModalEditCreate = ({
                 {/*body*/}
                 {children}
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid rounded-b">
-                  <button
-                    className="text-blue-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Fechar
-                  </button>
-                  <button
-                    className="bg-p-blue text-white active:bg-blue-600 hover:bg-p-blue-dark font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Salvar {idEditable !== "" ?? "Alterações"}
-                  </button>
-                </div>
               </div>
             </div>
           </div>
