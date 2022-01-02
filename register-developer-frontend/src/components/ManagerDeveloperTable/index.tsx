@@ -1,7 +1,7 @@
 import { useMemo, useState, useRef, useCallback } from "react";
 import api from "../../services/api";
 import { useEffect } from "react";
-import Table from "../Table/index";
+import TableDeveloper from "../TableDeveloper/index";
 import { toast } from "react-toastify";
 
 const ManagerDeveloperTable = () => {
@@ -100,7 +100,7 @@ const ManagerDeveloperTable = () => {
     });
   }, []);
   return (
-    <Table
+    <TableDeveloper
       columns={columns}
       data={data}
       fetchData={fetchData}
