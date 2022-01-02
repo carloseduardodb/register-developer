@@ -1,15 +1,26 @@
-import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useDeveloper } from "../../hooks/useDeveloper";
+import { useLocation } from "react-router-dom";
+import { useLevel } from "../../hooks/useLevel";
 
 const HeaderActions = () => {
   const navigate = useNavigate();
-  const { setStatusModal, setTitle } = useDeveloper();
+
+  // pega a rota atual usando react router
+  const location = useLocation();
+
+  const developer = useDeveloper();
+  const level = useLevel();
 
   const handleCreateModal = () => {
-    setTitle("Cadastrar Desenvolvedor");
-    setStatusModal(true);
+    if (location.pathname === "/niveis") {
+      level.setTitle("Cadastrar Nível");
+      level.setStatusModal(true);
+    } else if (location.pathname === "/desenvolvedores") {
+      developer.setTitle("Cadastrar Desenvolvedor");
+      developer.setStatusModal(true);
+    }
   };
 
   return (
