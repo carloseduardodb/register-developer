@@ -55,6 +55,7 @@ const ManagerDeveloperModals = () => {
         .then(() => {
           setStatusModal(false);
           setUpdateTable(!updateTable);
+          reset();
           toast.success("Cadastrado com sucesso!");
         })
         .catch((err) => {
