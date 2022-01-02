@@ -65,6 +65,10 @@
   <br />
   <img src="./project-image/management-level.png" width="520" alt="Gerenciar niveis" />
 
+- Listagem dos endpoints do Swagger
+  <br />
+  <img src="./project-image/endpoints-swagger.png" width="520" alt="Endpoints swagger" />
+
 ## Instalação (Comandos testados apenas no linux)
 
 <p>
@@ -106,6 +110,10 @@ $ cd register-developer-backend
 $ yarn install && yarn start:dev && yarn test:watch
 ```
 
+> O projeto estará disponível em localhost:3000
+
+> A documentação da api estará disponível em localhost:3000/api
+
 ### Frontend
 
 <p>
@@ -123,6 +131,8 @@ $ cd register-developer-frontend
 ```bash
 $ yarn install && yarn start
 ```
+
+> O projeto estará disponível em localhost:3001
 
 ## Entre em contato
 
