@@ -20,6 +20,7 @@ import { IGetLevelUseCase } from '../interfaces/usecase/get-level.usecase.interf
 import { IEditLevelUseCase } from '../interfaces/usecase/edit-level.usecase.interface';
 import { IDeleteLevelUseCase } from '../interfaces/usecase/delete-level.usecase.interface';
 import { IGetAllLevelUseCase } from '../interfaces/usecase/get-all-level.usecase.interface';
+import { IGetAllLevelNotPaginateUseCase } from '../interfaces/usecase/get-all-level-not-paginate.usecase.interface';
 import { PartialLevel } from '../domain/partial-level.domain';
 import { PartialLevelPaginationDomain } from '../domain/partial-level-pagination.domain';
 import { HttpExceptionFilter } from '../../common/filters/http-exception.filter';
@@ -42,7 +43,7 @@ import deleteLevelSuccessSchema from '../docs/delete-level-success.schema';
 import deleteLevelErrorSchema from '../docs/delete-level-error.schema';
 import updateLevelSuccessSchema from '../docs/update-level-success.schema';
 import updateLevelErrorSchema from '../docs/update-level-error.schema';
-
+import findAllLevelNotPaginateSuccessSchema from '../docs/find-all-level-not-paginate.success.schema';
 @ApiTags('levels')
 @Controller('levels')
 export class LevelsController {
@@ -57,7 +58,23 @@ export class LevelsController {
     private editLevelApp: IEditLevelUseCase,
     @Inject(LEVEL_TYPES.usecases.IDeleteLevelUseCase)
     private deleteLevelApp: IDeleteLevelUseCase,
+    @Inject(LEVEL_TYPES.usecases.IGetAllLevelNotPaginatedUseCase)
+    private getAllLevelNotPaginate: IGetAllLevelNotPaginateUseCase,
   ) {}
+
+  // Get All Level Not Paginate-------------------------------
+  @Get('/all')
+  @ApiOkResponse({
+    description: 'Brings all levels without paging',
+    schema: findAllLevelNotPaginateSuccessSchema,
+  })
+  async findAllLevelNotPaginate(@Res() res) {
+    const levels = await this.getAllLevelNotPaginate.getAllNotPaginate();
+    return res.status(HttpStatus.OK).json({
+      statusCode: HttpStatus.OK,
+      data: levels,
+    });
+  }
 
   // Created Level-------------------------------
 
@@ -123,10 +140,7 @@ export class LevelsController {
   @UseFilters(new HttpExceptionFilter())
   async findAll(@Res() res, @Query() query: PartialLevelPaginationDomain) {
     const levels = await this.getAllLevel.getAll(query);
-    return res.status(HttpStatus.OK).json({
-      statusCode: HttpStatus.OK,
-      data: levels,
-    });
+    return res.status(HttpStatus.OK).json(levels);
   }
 
   // Update Level-------------------------------
