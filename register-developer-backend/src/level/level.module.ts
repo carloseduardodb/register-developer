@@ -13,6 +13,8 @@ import { EditLevelUseCase } from './usecase/edit-level.usecase';
 import { GetLevelUseCase } from './usecase/get-level.usecase';
 import { CreateLevelUseCase } from './usecase/create-level.usecase';
 import { GetAllLevelUseCase } from './usecase/get-all.level.usecase';
+import { GetAllLevelNotPaginateUseCase } from './usecase/get-all-level-not-paginate.usecase';
+import { GetAllLevelNotPaginateService } from './services/get-all-level-not-paginate.service';
 
 const createLevelApp = {
   provide: LEVEL_TYPES.usecases.ICreateLevelUseCase,
@@ -33,6 +35,16 @@ const editLevelApp = {
 const deleteLevelApp = {
   provide: LEVEL_TYPES.usecases.IDeleteLevelUseCase,
   useClass: DeleteLevelUseCase,
+};
+
+const getAllLevelNotPaginateApp = {
+  provide: LEVEL_TYPES.usecases.IGetAllLevelNotPaginatedUseCase,
+  useClass: GetAllLevelNotPaginateUseCase,
+};
+
+const getAllLevelNotPaginate = {
+  provide: LEVEL_TYPES.usecases.IGetAllLevelNotPaginatedUseCase,
+  useClass: GetAllLevelNotPaginateService,
 };
 
 const createLevelService = {
@@ -63,6 +75,7 @@ const deleteLevelService = {
     createLevelApp,
     getLevelApp,
     getAllLevelApp,
+    getAllLevelNotPaginateApp,
     editLevelApp,
     deleteLevelApp,
     createLevelService,
@@ -70,6 +83,7 @@ const deleteLevelService = {
     getAllLevelService,
     editLevelService,
     deleteLevelService,
+    getAllLevelNotPaginate,
   ],
 })
 export class LevelsModule {}
