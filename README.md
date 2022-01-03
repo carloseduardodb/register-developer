@@ -4,6 +4,20 @@
 
 <p align="center">Cadastro de desenvolvedores e seus níveis</p>
 
+## Notas
+
+> Não deu tempo para deixar o projeto em um servidor como o heroku, mas deixo aqui um projetinho muito massa para referência (Fiz ele em um curso mas adicionei uma serie de features, como o modo escuro e responsividade além de ter feito ele com meu querido TailwindCSS 😌 )
+> <br />
+> <a href="https://letmeask-true.web.app/">Teasker</a>
+
+> Pra validação eu preferiria ter usado o UnForm com o Yup mas acabei tentando algo diferente com o React Hook Form não ficou muito bom 😞, mas deixo aqui um projeto onde utilizei esse tipo de validação 😏 (Esse é um projeto mobile, mas é usando a mesma biblioteca e os conceitos são quase os mesmos. 😎)
+> <br />
+> <a href="https://github.com/carloseduardodb/crud-register-teacher-react-native">React Native Register Teacher</a>
+
+## O que foi divertido fazer 🥳
+
+> Estava tentando integrar o React Table com paginação usando o servidor e foi meio chato integrar mas ocorreu tudo bem.
+
 ## Tecnologias utilizadas
 
 ### Frontend
